@@ -4,6 +4,7 @@ import EditorJS, { OutputData, BlockToolData, API } from '@editorjs/editorjs'
 import Paragraph from '@editorjs/paragraph'
 
 export interface EditorJsProps {
+  holderId?: string | HTMLElement
   enableReInitialize?: boolean
 
   instanceRef?: (instance: EditorJS) => void
@@ -20,10 +21,24 @@ export type Props = Readonly<EditorJS.EditorConfig> & Readonly<EditorJsProps>
 
 class EditorJsContainer extends React.PureComponent<Props> {
   instance?: EditorJS
+  holder?: string
 
-  holder: string = `editor-js-${(
-    Math.floor(Math.random() * 1000) + Date.now()
-  ).toString(36)}`
+  constructor(props: Props) {
+    super(props);
+
+    if (props.holderId) {
+      if (typeof props.holderId === 'string') {
+        this.holder = props.holderId;
+      }
+      if (props.holderId instanceof HTMLElement) {
+        this.holder = props.holderId.id;
+      }
+    } else {
+      this.holder = `editor-js-${(
+          Math.floor(Math.random() * 1000) + Date.now()
+      ).toString(36)}`
+    }
+  }
 
   componentDidMount() {
     this.initEditor()
