@@ -1,7 +1,7 @@
 import * as React from 'react';
 import EditorJS, { OutputData, BlockToolData, API } from '@editorjs/editorjs';
 export interface EditorJsProps {
-    holderId?: string | HTMLElement;
+    holder?: string | HTMLElement;
     enableReInitialize?: boolean;
     instanceRef?: (instance: EditorJS) => void;
     onChange?: (api: API, data?: OutputData) => void;
